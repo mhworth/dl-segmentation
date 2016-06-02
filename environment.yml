@@ -11,8 +11,11 @@ dependencies:
    - jupyter
    - ipdb
    - pillow
+   - matplotlib
+   - bokeh
    - pip:
-      - https://storage.googleapis.com/tensorflow/mac/tensorflow-0.8.0-py2-none-any.whl
+      #- https://storage.googleapis.com/tensorflow/mac/tensorflow-0.8.0-py2-none-any.whl
+      - https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-0.8.0-cp27-none-linux_x86_64.whl
       - nibabel
       - pydicom
       - medpy
