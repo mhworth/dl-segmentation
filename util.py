@@ -9,22 +9,27 @@ import matplotlib.pyplot as plt
 from matplotlib.pyplot import imshow
 from PIL import Image
 from cStringIO import StringIO
+from scipy.misc import imresize
 
-WIDTH = 2048
-HEIGHT = 2048
+
+REAL_WIDTH = 2048
+REAL_HEIGHT = 2048
+
+WIDTH = REAL_WIDTH/2
+HEIGHT = REAL_HEIGHT/2
 
 ClinicalInformation = collections.namedtuple('ClinicialInformation', ["filename"])
 
 # Some functions to load image
 def load_image_file(filename):
     a = np.fromfile(filename, dtype=">i2")
-    raw_image = a.reshape((WIDTH, HEIGHT))
-    return raw_image
+    raw_image = a.reshape((REAL_WIDTH, REAL_HEIGHT))
+    return imresize(raw_image, 0.5)
 
 def load_image_content(content):
     a = np.fromstring(content, dtype=">i2")
-    raw_image = a.reshape((WIDTH, HEIGHT))
-    return raw_image
+    raw_image = a.reshape((REAL_WIDTH, REAL_HEIGHT))
+    return imresize(raw_image, 0.5)
 
 def load_image_from_bucket(bucket, key_name):
     key = bucket.get_key(key_name)
@@ -35,7 +40,6 @@ def resample_image(image16):
     image16float = image16.astype(np.float32)
     image8 = image16float*256/image16.max()
     return image8.astype(np.uint8)
-
 
 def load_truth_data(bucket):
     nodule_truth = bucket.get_key('Clinical_Information/nodule-truth-cleaned.csv')
